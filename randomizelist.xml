@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="randomizelist" default="all">
+  
+  
+  <property file="randomizelist.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module RandomizeList -->
+  
+  <dirname property="module.randomizelist.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.randomizelist" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="randomizelist.output.dir" value="${module.randomizelist.basedir}/out/production/RandomizeList"/>
+  <property name="randomizelist.testoutput.dir" value="${module.randomizelist.basedir}/out/test/RandomizeList"/>
+  
+  <path id="randomizelist.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="randomizelist.module.production.classpath"/>
+  
+  <path id="randomizelist.runtime.production.module.classpath">
+    <pathelement location="${randomizelist.output.dir}"/>
+  </path>
+  
+  <path id="randomizelist.module.classpath">
+    <pathelement location="${randomizelist.output.dir}"/>
+  </path>
+  
+  <path id="randomizelist.runtime.module.classpath">
+    <pathelement location="${randomizelist.testoutput.dir}"/>
+    <pathelement location="${randomizelist.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.randomizelist">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.randomizelist">
+    <patternset refid="excluded.from.module.randomizelist"/>
+  </patternset>
+  
+  <path id="randomizelist.module.sourcepath">
+    <dirset dir="${module.randomizelist.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.randomizelist" depends="compile.module.randomizelist.production,compile.module.randomizelist.tests" description="Compile module RandomizeList"/>
+  
+  <target name="compile.module.randomizelist.production" description="Compile module RandomizeList; production classes">
+    <mkdir dir="${randomizelist.output.dir}"/>
+    <javac destdir="${randomizelist.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.randomizelist}"/>
+      <bootclasspath refid="randomizelist.module.bootclasspath"/>
+      <classpath refid="randomizelist.module.production.classpath"/>
+      <src refid="randomizelist.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.randomizelist"/>
+    </javac>
+    
+    <copy todir="${randomizelist.output.dir}">
+      <fileset dir="${module.randomizelist.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.randomizelist.tests" depends="compile.module.randomizelist.production" description="compile module RandomizeList; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.randomizelist" description="cleanup module">
+    <delete dir="${randomizelist.output.dir}"/>
+    <delete dir="${randomizelist.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.randomizelist" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.randomizelist" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

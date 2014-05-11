@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RandomizeList:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RandomizeList_jar</output-path>
+    <root id="archive" name="RandomizeList.jar">
+      <element id="module-output" name="RandomizeList" />
+    </root>
+  </artifact>
+</component>
